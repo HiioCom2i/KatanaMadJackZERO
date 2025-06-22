@@ -129,7 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 118712021}
   - component: {fileID: 118712020}
-  - component: {fileID: 118712019}
+  - component: {fileID: 118712022}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -137,21 +137,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &118712019
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 118712018}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83f1084589f4bfd459f5fbf040e6254e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 5
-  gravity: -9.81
-  jumpHeight: 0.6
 --- !u!143 &118712020
 CharacterController:
   m_ObjectHideFlags: 0
@@ -195,6 +180,22 @@ Transform:
   - {fileID: 412832360}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &118712022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 118712018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fe8aeffbec23414da3419d1cbaa8264, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
+  gravity: -9.81
+  jumpHeight: 1.5
+  gameController: {fileID: 344742303}
 --- !u!1 &136385900
 GameObject:
   m_ObjectHideFlags: 0
@@ -572,6 +573,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 344742302}
+  - component: {fileID: 344742303}
   m_Layer: 0
   m_Name: GameController
   m_TagString: GameController
@@ -594,6 +596,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &344742303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 344742301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55209d80f72d44d4c80a56838bd2fdd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player_points: 0
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0

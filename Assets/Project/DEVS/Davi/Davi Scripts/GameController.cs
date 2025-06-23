@@ -15,6 +15,7 @@ public class GameController : MonoBehaviour
     private double player_pistol_dmg;
 
 
+    public Player_Davi player;
 
     void Start()
     {
@@ -59,21 +60,27 @@ public class GameController : MonoBehaviour
         {
             case >= 560:  //RANK S
                 applyRankBonus('S');
+                player.setPlayerSpeedMultiplier(1.4f);
                 break;
             case >= 430:  //RANK A
                 applyRankBonus('A');
+                player.setPlayerSpeedMultiplier(1.2f);
                 break;
             case >= 310:  //RANK B
                 applyRankBonus('B');
+                player.setPlayerSpeedMultiplier(1f);
                 break;
             case >= 220:  //RANK C
                 applyRankBonus('C');
+                player.setPlayerSpeedMultiplier(1f);
                 break;
             case >= 90:   //RANK D
                 applyRankBonus('D');
+                player.setPlayerSpeedMultiplier(1f);
                 break;
             default:      //RANK E
                 applyRankBonus('E');
+                player.setPlayerSpeedMultiplier(1f);
                 break;
 
         }

@@ -3,7 +3,9 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class Player_Davi : MonoBehaviour
 {
-    public float speed = 5f;
+    public float base_speed = 5f;
+    private float player_speed_multiplier = 1;
+    private float player_speed;
     public float gravity = -9.81f;
     public float jumpHeight = 1.5f;
     private double health_points = 200;
@@ -15,6 +17,7 @@ public class Player_Davi : MonoBehaviour
 
     void Start()
     {
+        player_speed = player_speed_multiplier * base_speed;
         controller = GetComponent<CharacterController>();
         InvokeRepeating("playerHPRegen", 5f, 5f); // Player ganha vida a cada 5 segundos
     }
@@ -53,7 +56,7 @@ public class Player_Davi : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
 
-        Vector3 finalMove = move * speed + Vector3.up * velocity.y;
+        Vector3 finalMove = move * player_speed + Vector3.up * velocity.y;
         controller.Move(finalMove * Time.deltaTime);
     }
 
@@ -67,4 +70,10 @@ public class Player_Davi : MonoBehaviour
     {
         Debug.Log("ATACOU");
     }
+
+    public void setPlayerSpeedMultiplier(float s)
+    {
+        player_speed_multiplier = s;
+    }
+
 }

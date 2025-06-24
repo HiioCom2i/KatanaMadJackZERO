@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(CharacterController))]
 public class Player_Davi : MonoBehaviour
@@ -8,12 +9,14 @@ public class Player_Davi : MonoBehaviour
     private float player_speed;
     public float gravity = -9.81f;
     public float jumpHeight = 1.5f;
-    private double health_points = 200;
+    public double health_points = 200;
 
     private CharacterController controller;
     private Vector3 velocity;
     private Vector3 move;
     public GameController gameController;
+
+    public Text health_points_UI;
 
     void Start()
     {
@@ -58,6 +61,8 @@ public class Player_Davi : MonoBehaviour
 
         Vector3 finalMove = move * player_speed + Vector3.up * velocity.y;
         controller.Move(finalMove * Time.deltaTime);
+
+        health_points_UI.text = health_points.ToString();
     }
 
     public void playerTakesDamage(double damage)

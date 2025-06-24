@@ -5,8 +5,6 @@ public class GameController : MonoBehaviour
 {
 
     public int player_points = 0;
-    private double player_HP = 200;
-
 
     private double player_katana_base_dmg = 50;
     private double player_pistol_base_dmg = 35;  
@@ -37,20 +35,11 @@ public class GameController : MonoBehaviour
         E.SetActive(true);
 
         InvokeRepeating("losePointsWithTime", 5f, 2f); // Player perde pontos a cada 5 segundos, quando fora de combate (TODO!)
-        InvokeRepeating("playerHPRegen", 5f, 5f); // Player ganha vida a cada 5 segundos, quando fora de combate (TODO!)
     }
 
     public void losePointsWithTime()
     {
         addPlayerPoints(-5);
-    }
-
-    public void playerHPRegen()
-    {
-        if (player_HP < 200)
-        {
-            player_HP += 5;
-        }
     }
 
     void Update()
@@ -147,16 +136,6 @@ public class GameController : MonoBehaviour
 
         player_katana_dmg = damage_multiplier * player_katana_base_dmg;  
         player_pistol_dmg = damage_multiplier * player_pistol_base_dmg; 
-    }
-
-    private void calcularBrilhoLetraRank(RankLetterFill letter) {
-        
-    }
-
-    private void playerTakesDamage(double damage)
-    {
-        player_HP -= damage;
-        addPlayerPoints(-60); // Player perde 60 pontos ao tomar dano
     }
 
     public int getPlayerPoints()

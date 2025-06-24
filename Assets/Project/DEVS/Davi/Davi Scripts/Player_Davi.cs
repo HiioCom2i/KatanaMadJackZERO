@@ -60,7 +60,7 @@ public class Player_Davi : MonoBehaviour
         controller.Move(finalMove * Time.deltaTime);
     }
 
-    private void playerTakesDamage(double damage)
+    public void playerTakesDamage(double damage)
     {
         health_points -= damage;
         gameController.addPlayerPoints(-60); // Player perde 60 pontos ao tomar dano
@@ -69,6 +69,8 @@ public class Player_Davi : MonoBehaviour
     private void PlayerAttack()
     {
         Debug.Log("ATACOU");
+        // ANIMAÇÃO
+        // DETECÇÃO DE HITBOX
     }
 
     public void setPlayerSpeedMultiplier(float s)

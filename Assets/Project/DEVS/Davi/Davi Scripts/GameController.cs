@@ -1,3 +1,4 @@
+using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 
 public class GameController : MonoBehaviour
@@ -16,13 +17,26 @@ public class GameController : MonoBehaviour
 
 
     public Player_Davi player;
+    public GameObject S;
+    public GameObject A;
+    public RankLetterFill A_claro;
+    public GameObject B;
+    public RankLetterFill B_claro;
+    public GameObject C;
+    public RankLetterFill C_claro;
+    public GameObject D;
+    public RankLetterFill D_claro;
+    public GameObject E;
+    public RankLetterFill E_claro;
 
     void Start()
     {
         player_katana_dmg = damage_multiplier * player_katana_base_dmg;
         player_pistol_dmg = damage_multiplier * player_pistol_base_dmg;
 
-        InvokeRepeating("losePointsWithTime", 5f, 5f); // Player perde pontos a cada 5 segundos, quando fora de combate (TODO!)
+        E.SetActive(true);
+
+        InvokeRepeating("losePointsWithTime", 5f, 2f); // Player perde pontos a cada 5 segundos, quando fora de combate (TODO!)
         InvokeRepeating("playerHPRegen", 5f, 5f); // Player ganha vida a cada 5 segundos, quando fora de combate (TODO!)
     }
 
@@ -56,31 +70,52 @@ public class GameController : MonoBehaviour
 
     private void checkPlayerRank()
     {
+        // Desativa todas as UI dos ranks, para ativar uma única dentro do switch
+        S.SetActive(false);
+        A.SetActive(false);
+        B.SetActive(false);
+        C.SetActive(false);
+        D.SetActive(false);
+        E.SetActive(false);
+
+        // Calcula a porcentagem de completude
+        
         switch (player_points)
         {
             case >= 560:  //RANK S
                 applyRankBonus('S');
                 player.setPlayerSpeedMultiplier(1.4f);
+                S.SetActive(true);
                 break;
             case >= 430:  //RANK A
                 applyRankBonus('A');
                 player.setPlayerSpeedMultiplier(1.2f);
+                A.SetActive(true);
+                A_claro.setFillAmount(560f, 430f, player_points);
                 break;
             case >= 310:  //RANK B
                 applyRankBonus('B');
                 player.setPlayerSpeedMultiplier(1f);
+                B.SetActive(true);
+                B_claro.setFillAmount(430f, 310f, player_points);
                 break;
             case >= 220:  //RANK C
                 applyRankBonus('C');
                 player.setPlayerSpeedMultiplier(1f);
+                C.SetActive(true);
+                C_claro.setFillAmount(310f, 220f, player_points);
                 break;
             case >= 90:   //RANK D
                 applyRankBonus('D');
                 player.setPlayerSpeedMultiplier(1f);
+                D.SetActive(true);
+                D_claro.setFillAmount(220f, 90f, player_points);
                 break;
             default:      //RANK E
                 applyRankBonus('E');
                 player.setPlayerSpeedMultiplier(1f);
+                E.SetActive(true);
+                E_claro.setFillAmount(90f, 0f, player_points);
                 break;
 
         }
@@ -112,6 +147,10 @@ public class GameController : MonoBehaviour
 
         player_katana_dmg = damage_multiplier * player_katana_base_dmg;  
         player_pistol_dmg = damage_multiplier * player_pistol_base_dmg; 
+    }
+
+    private void calcularBrilhoLetraRank(RankLetterFill letter) {
+        
     }
 
     private void playerTakesDamage(double damage)

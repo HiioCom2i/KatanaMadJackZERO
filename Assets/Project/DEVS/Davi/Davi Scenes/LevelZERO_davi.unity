@@ -198,6 +198,9 @@ MonoBehaviour:
   health_points: 200
   gameController: {fileID: 344742303}
   health_points_UI: {fileID: 664736204}
+  dashDistance: 6
+  dashDuration: 0.2
+  dashCooldown: 0.8
 --- !u!1 &119994509
 GameObject:
   m_ObjectHideFlags: 0

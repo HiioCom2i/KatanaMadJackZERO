@@ -18,11 +18,20 @@ public class Player_Davi : MonoBehaviour
 
     public Text health_points_UI;
 
+    // DASH VARIABLES
+    public float dashDistance = 10f;
+    public float dashDuration = 0.2f;
+    public float dashCooldown = 1.5f;
+    private bool isDashing = false;
+    private bool canDash = true;
+    private Vector3 dashDirection;
+    private float dashTimer = 0f;
+
     void Start()
     {
         player_speed = player_speed_multiplier * base_speed;
         controller = GetComponent<CharacterController>();
-        InvokeRepeating("playerHPRegen", 5f, 5f); // Player ganha vida a cada 5 segundos
+        InvokeRepeating("playerHPRegen", 5f, 5f);
     }
 
     public void playerHPRegen()
@@ -35,10 +44,29 @@ public class Player_Davi : MonoBehaviour
 
     void Update()
     {
+        if (isDashing)
+        {
+            controller.Move(dashDirection * (dashDistance / dashDuration) * Time.deltaTime);
+            dashTimer += Time.deltaTime;
+            if (dashTimer >= dashDuration)
+            {
+                isDashing = false;
+                dashTimer = 0f;
+                Invoke(nameof(ResetDash), dashCooldown);
+            }
+            return; // interrompe Update normal enquanto dash ativo
+        }
+
         float moveX = Input.GetAxis("Horizontal");
         float moveZ = Input.GetAxis("Vertical");
 
         move = transform.right * moveX + transform.forward * moveZ;
+
+        // DASH input
+        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
+        {
+            StartDash();
+        }
 
         if (controller.isGrounded && velocity.y < 0)
         {
@@ -65,22 +93,45 @@ public class Player_Davi : MonoBehaviour
         health_points_UI.text = health_points.ToString();
     }
 
+    private void StartDash()
+    {
+        canDash = false;
+        isDashing = true;
+        velocity.y = 0f;
+
+        if (move.magnitude > 0.1f)
+        {
+            dashDirection = move.normalized;
+        }
+        else
+        {
+            dashDirection = transform.forward;
+        }
+
+        // dash n muda altura do player
+        dashDirection.y = 0f;
+    }
+
+    private void ResetDash()
+    {
+        canDash = true;
+    }
+
     public void playerTakesDamage(double damage)
     {
         health_points -= damage;
-        gameController.addPlayerPoints(-60); // Player perde 60 pontos ao tomar dano
+        gameController.addPlayerPoints(-60);
     }
 
     private void PlayerAttack()
     {
         Debug.Log("ATACOU");
-        // ANIMAÇÃO
-        // DETECÇÃO DE HITBOX
+        //animação
+        //detecção de hitbox
     }
 
     public void setPlayerSpeedMultiplier(float s)
     {
         player_speed_multiplier = s;
     }
-
 }

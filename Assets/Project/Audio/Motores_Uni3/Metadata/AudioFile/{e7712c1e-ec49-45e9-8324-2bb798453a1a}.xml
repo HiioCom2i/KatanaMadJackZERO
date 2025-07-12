@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{e7712c1e-ec49-45e9-8324-2bb798453a1a}">
+		<property name="assetPath">
+			<value>Shing/Shing-4.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>1.252108843537415</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{fc034750-8676-4d0e-9b26-db1a8e7975dd}</destination>
+		</relationship>
+	</object>
+</objects>

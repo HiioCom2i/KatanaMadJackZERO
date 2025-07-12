@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{920a940e-8983-4ad3-a334-0016884f4e6d}">
+		<property name="assetPath">
+			<value>Pistola Inimigo/PistolaInimigo-2.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.71854875283446717</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{fc034750-8676-4d0e-9b26-db1a8e7975dd}</destination>
+		</relationship>
+	</object>
+</objects>

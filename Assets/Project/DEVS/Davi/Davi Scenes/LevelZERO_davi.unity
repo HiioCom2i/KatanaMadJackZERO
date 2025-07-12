@@ -189,12 +189,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 118712018}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6fe8aeffbec23414da3419d1cbaa8264, type: 3}
+  m_Script: {fileID: 11500000, guid: 4fe9cdf115cb44342870cac42e4a4495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   base_speed: 5
   gravity: -9.81
-  jumpHeight: 1.5
+  jumpHeight: 0.6
   health_points: 200
   gameController: {fileID: 344742303}
   health_points_UI: {fileID: 664736204}
@@ -212,7 +212,7 @@ GameObject:
   - component: {fileID: 119994510}
   - component: {fileID: 119994513}
   - component: {fileID: 119994512}
-  - component: {fileID: 119994511}
+  - component: {fileID: 119994514}
   m_Layer: 5
   m_Name: E claro
   m_TagString: Untagged
@@ -239,20 +239,6 @@ RectTransform:
   m_AnchoredPosition: {x: -757, y: 329.5}
   m_SizeDelta: {x: 234, y: 270}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &119994511
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 119994509}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a4672bc363f61d4cba1042575d4ea20, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  brightLetterImage: {fileID: 119994512}
-  fillAmount: 0
 --- !u!114 &119994512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -291,6 +277,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 119994509}
   m_CullTransparentMesh: 1
+--- !u!114 &119994514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 119994509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9d1c334f812dca47891acd889d90ad0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  brightLetterImage: {fileID: 119994512}
+  fillAmount: 0
 --- !u!1 &136385900
 GameObject:
   m_ObjectHideFlags: 0
@@ -447,7 +447,7 @@ GameObject:
   - component: {fileID: 288296268}
   - component: {fileID: 288296271}
   - component: {fileID: 288296270}
-  - component: {fileID: 288296269}
+  - component: {fileID: 288296272}
   m_Layer: 5
   m_Name: C claro
   m_TagString: Untagged
@@ -474,20 +474,6 @@ RectTransform:
   m_AnchoredPosition: {x: -757, y: 329.5}
   m_SizeDelta: {x: 234, y: 270}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &288296269
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 288296267}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a4672bc363f61d4cba1042575d4ea20, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  brightLetterImage: {fileID: 288296270}
-  fillAmount: 0
 --- !u!114 &288296270
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -526,6 +512,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 288296267}
   m_CullTransparentMesh: 1
+--- !u!114 &288296272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 288296267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9d1c334f812dca47891acd889d90ad0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  brightLetterImage: {fileID: 288296270}
+  fillAmount: 0
 --- !u!1 &325461542
 GameObject:
   m_ObjectHideFlags: 0
@@ -827,22 +827,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 344742301}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55209d80f72d44d4c80a56838bd2fdd8, type: 3}
+  m_Script: {fileID: 11500000, guid: 86c1659995993fc45b2dd40a3f88371c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   player_points: 0
   player: {fileID: 118712022}
   S: {fileID: 427122548}
   A: {fileID: 1609708229}
-  A_claro: {fileID: 1443326133}
+  A_claro: {fileID: 1443326136}
   B: {fileID: 214538465}
-  B_claro: {fileID: 1356746357}
+  B_claro: {fileID: 1356746360}
   C: {fileID: 842859838}
-  C_claro: {fileID: 288296269}
+  C_claro: {fileID: 288296272}
   D: {fileID: 1567096006}
-  D_claro: {fileID: 1932251405}
+  D_claro: {fileID: 1932251408}
   E: {fileID: 2025227871}
-  E_claro: {fileID: 119994511}
+  E_claro: {fileID: 119994514}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -2332,7 +2332,7 @@ GameObject:
   - component: {fileID: 1356746356}
   - component: {fileID: 1356746359}
   - component: {fileID: 1356746358}
-  - component: {fileID: 1356746357}
+  - component: {fileID: 1356746360}
   m_Layer: 5
   m_Name: B claro
   m_TagString: Untagged
@@ -2359,20 +2359,6 @@ RectTransform:
   m_AnchoredPosition: {x: -757, y: 329.5}
   m_SizeDelta: {x: 234, y: 270}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1356746357
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1356746355}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a4672bc363f61d4cba1042575d4ea20, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  brightLetterImage: {fileID: 1356746358}
-  fillAmount: 0
 --- !u!114 &1356746358
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2411,6 +2397,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1356746355}
   m_CullTransparentMesh: 1
+--- !u!114 &1356746360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1356746355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9d1c334f812dca47891acd889d90ad0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  brightLetterImage: {fileID: 1356746358}
+  fillAmount: 0
 --- !u!1 &1443326131
 GameObject:
   m_ObjectHideFlags: 0
@@ -2422,7 +2422,7 @@ GameObject:
   - component: {fileID: 1443326132}
   - component: {fileID: 1443326135}
   - component: {fileID: 1443326134}
-  - component: {fileID: 1443326133}
+  - component: {fileID: 1443326136}
   m_Layer: 5
   m_Name: A claro
   m_TagString: Untagged
@@ -2449,20 +2449,6 @@ RectTransform:
   m_AnchoredPosition: {x: -757, y: 329.5}
   m_SizeDelta: {x: 234, y: 270}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1443326133
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1443326131}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a4672bc363f61d4cba1042575d4ea20, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  brightLetterImage: {fileID: 1443326134}
-  fillAmount: 0
 --- !u!114 &1443326134
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2501,6 +2487,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1443326131}
   m_CullTransparentMesh: 1
+--- !u!114 &1443326136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1443326131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9d1c334f812dca47891acd889d90ad0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  brightLetterImage: {fileID: 1443326134}
+  fillAmount: 0
 --- !u!1 &1476351967
 GameObject:
   m_ObjectHideFlags: 0
@@ -2770,7 +2770,7 @@ GameObject:
   - component: {fileID: 1932251404}
   - component: {fileID: 1932251407}
   - component: {fileID: 1932251406}
-  - component: {fileID: 1932251405}
+  - component: {fileID: 1932251408}
   m_Layer: 5
   m_Name: D claro
   m_TagString: Untagged
@@ -2797,20 +2797,6 @@ RectTransform:
   m_AnchoredPosition: {x: -757, y: 329.5}
   m_SizeDelta: {x: 234, y: 270}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1932251405
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1932251403}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a4672bc363f61d4cba1042575d4ea20, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  brightLetterImage: {fileID: 1932251406}
-  fillAmount: 0
 --- !u!114 &1932251406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2849,6 +2835,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1932251403}
   m_CullTransparentMesh: 1
+--- !u!114 &1932251408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1932251403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9d1c334f812dca47891acd889d90ad0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  brightLetterImage: {fileID: 1932251406}
+  fillAmount: 0
 --- !u!1 &1946687958
 GameObject:
   m_ObjectHideFlags: 0

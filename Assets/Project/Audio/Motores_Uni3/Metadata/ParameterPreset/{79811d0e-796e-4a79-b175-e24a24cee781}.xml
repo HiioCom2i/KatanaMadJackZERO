@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="ParameterPreset" id="{79811d0e-796e-4a79-b175-e24a24cee781}">
+		<property name="name">
+			<value>Em Combate</value>
+		</property>
+		<relationship name="folder">
+			<destination>{aab4c279-1202-4dc8-a76e-5fe6d98cd61e}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{82656036-8af9-4031-bdde-8c3f54893f26}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{82656036-8af9-4031-bdde-8c3f54893f26}">
+		<property name="parameterType">
+			<value>2</value>
+		</property>
+		<property name="maximum">
+			<value>2</value>
+		</property>
+		<property name="enumerationLabels">
+			<value>Não</value>
+			<value>Sim</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>

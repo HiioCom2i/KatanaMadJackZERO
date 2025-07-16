@@ -1,25 +1,43 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using FMODUnity;
+using FMOD.Studio;
+using System.Collections;
 
 public class MenuController_Davi : MonoBehaviour
 {
-
     public GameObject menuPrincipal;
     public GameObject menuOpcoes;
 
-    void Start()
-    {
+    public Slider volumeSFXSlider;
+    public Slider volumeMusicaSlider;
+    private string parametroVolumeSFX = "Volume SFX";
+    private string parametroVolumeMusica = "Volume Música";
 
+    private bool fmodPronto = false;
+
+    IEnumerator Start()
+    {
+        // Aguarda o sistema da FMOD estar pronto (espera um frame)
+        yield return null;
+        fmodPronto = true;
+
+        if (volumeSFXSlider != null)
+        {
+            volumeSFXSlider.value = 70f;
+            RuntimeManager.StudioSystem.setParameterByName(parametroVolumeSFX, volumeSFXSlider.value);
+        }
+        if (volumeMusicaSlider != null)
+        {
+            volumeMusicaSlider.value = 70f;
+            RuntimeManager.StudioSystem.setParameterByName(parametroVolumeMusica, volumeMusicaSlider.value);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
+    void Update() { }
 
-    }
-
-
-    //Botões menu principal
+    // Botões menu principal
     public void ComecarJogo()
     {
         SceneManager.LoadScene("LevelZERO");
@@ -27,19 +45,40 @@ public class MenuController_Davi : MonoBehaviour
 
     public void Opcoes()
     {
-        menuOpcoes.SetActive(true); // Mostra o canvas de opções
-        menuPrincipal.SetActive(false);   // Esconde o menu principal (opcional)
+        menuOpcoes.SetActive(true);
+        menuPrincipal.SetActive(false);
     }
 
     public void VoltarParaMenu()
     {
-        menuOpcoes.SetActive(false); // Esconde o canvas de opções
-        menuPrincipal.SetActive(true);   // Mostra o menu principal (opcional)
+        menuOpcoes.SetActive(false);
+        menuPrincipal.SetActive(true);
     }
 
     public void Sair()
     {
         Debug.Log("Saindo do jogo...");
-        Application.Quit();
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #else
+            Application.Quit();
+        #endif
     }
+
+    public void AtualizarVolumeSFX()
+    {
+        if (!fmodPronto) return;
+
+        RuntimeManager.StudioSystem.setParameterByName(parametroVolumeSFX, volumeSFXSlider.value / 100);
+        Debug.Log($"Parâmetro global '{parametroVolumeSFX}' ajustado para {volumeSFXSlider.value / 100}");
+    }
+    
+    public void AtualizarVolumeMusica()
+    {
+        if (!fmodPronto) return;
+
+        RuntimeManager.StudioSystem.setParameterByName(parametroVolumeMusica, volumeMusicaSlider.value/100);
+        Debug.Log($"Parâmetro global '{parametroVolumeMusica}' ajustado para {volumeMusicaSlider.value/100}");
+    }
+
 }

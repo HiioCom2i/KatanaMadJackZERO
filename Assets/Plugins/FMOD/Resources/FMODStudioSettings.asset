@@ -480,6 +480,7 @@ MonoBehaviour:
   Banks:
   - Inimigo
   - Menu Sounds
+  - Music
   - Player
   - Porta
   BanksToLoad: []

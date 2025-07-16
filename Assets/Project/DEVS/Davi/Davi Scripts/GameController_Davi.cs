@@ -1,3 +1,5 @@
+using FMOD.Studio;
+using FMODUnity;
 using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 
@@ -7,10 +9,10 @@ public class GameController_Davi : MonoBehaviour
     public int player_points = 0;
 
     private double player_katana_base_dmg = 50;
-    private double player_pistol_base_dmg = 35;  
-    private double damage_multiplier = 1; 
+    private double player_pistol_base_dmg = 35;
+    private double damage_multiplier = 1;
 
-    private double player_katana_dmg;  
+    private double player_katana_dmg;
     private double player_pistol_dmg;
 
 
@@ -27,6 +29,9 @@ public class GameController_Davi : MonoBehaviour
     public GameObject E;
     public RankLetterFill_Davi E_claro;
 
+    // Música
+    private EventInstance musicaFase0;
+
     void Start()
     {
         player_katana_dmg = damage_multiplier * player_katana_base_dmg;
@@ -35,6 +40,10 @@ public class GameController_Davi : MonoBehaviour
         E.SetActive(true);
 
         InvokeRepeating("losePointsWithTime", 5f, 2f); // Player perde pontos a cada 5 segundos, quando fora de combate (TODO!)
+
+        // Dá play na música
+        musicaFase0 = RuntimeManager.CreateInstance("event:/Música Fase 0"); // Altere para o caminho do seu evento
+        musicaFase0.start();
     }
 
     public void losePointsWithTime()
@@ -52,7 +61,7 @@ public class GameController_Davi : MonoBehaviour
     {
         player_points += points;
 
-        if (player_points < 0){ player_points = 0; }
+        if (player_points < 0) { player_points = 0; }
 
         checkPlayerRank();
     }
@@ -68,7 +77,7 @@ public class GameController_Davi : MonoBehaviour
         E.SetActive(false);
 
         // Calcula a porcentagem de completude
-        
+
         switch (player_points)
         {
             case >= 560:  //RANK S
@@ -134,12 +143,19 @@ public class GameController_Davi : MonoBehaviour
                 break;
         }
 
-        player_katana_dmg = damage_multiplier * player_katana_base_dmg;  
-        player_pistol_dmg = damage_multiplier * player_pistol_base_dmg; 
+        player_katana_dmg = damage_multiplier * player_katana_base_dmg;
+        player_pistol_dmg = damage_multiplier * player_pistol_base_dmg;
     }
 
     public int getPlayerPoints()
     {
         return player_points;
+    }
+
+    // Para a música 
+    void OnDestroy()
+    {
+        musicaFase0.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        musicaFase0.release();
     }
 }

@@ -4,6 +4,8 @@ using UnityEngine.UI;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement_Davi : MonoBehaviour
 {
+
+    // VARIÁVEIS MOVIMENTO 
     public float base_speed = 5f;
     private float player_speed_multiplier = 1;
     private float player_speed;
@@ -16,9 +18,8 @@ public class PlayerMovement_Davi : MonoBehaviour
     private Vector3 move;
     public GameController_Davi gameController;
 
-    public Text health_points_UI;
 
-    // DASH VARIABLES
+    // VARIÁVEIS DASH 
     public float dashDistance = 6f;
     public float dashDuration = 0.2f;
     public float dashCooldown = 0.8f;
@@ -27,11 +28,19 @@ public class PlayerMovement_Davi : MonoBehaviour
     private Vector3 dashDirection;
     private float dashTimer = 0f;
 
+    // PAUSE
+    public bool pausado = false;
+    public GameObject menuPauseUI;
+    public GameObject hud;
+    public Text health_points_UI;
+
     void Start()
     {
         player_speed = player_speed_multiplier * base_speed;
         controller = GetComponent<CharacterController>();
         InvokeRepeating("playerHPRegen", 5f, 5f);
+        if (menuPauseUI != null)
+            menuPauseUI.SetActive(false);
     }
 
     public void playerHPRegen()
@@ -44,6 +53,14 @@ public class PlayerMovement_Davi : MonoBehaviour
 
     void Update()
     {
+        // Gerencia o pause
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            pausado = !pausado;
+            TogglePause();
+        }
+
+
         if (isDashing)
         {
             controller.Move(dashDirection * (dashDistance / dashDuration) * Time.deltaTime);
@@ -54,7 +71,7 @@ public class PlayerMovement_Davi : MonoBehaviour
                 dashTimer = 0f;
                 Invoke(nameof(ResetDash), dashCooldown);
             }
-            return; // interrompe Update normal enquanto dash ativo
+            return;
         }
 
         float moveX = Input.GetAxis("Horizontal");
@@ -62,7 +79,6 @@ public class PlayerMovement_Davi : MonoBehaviour
 
         move = transform.right * moveX + transform.forward * moveZ;
 
-        // DASH input
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
         {
             StartDash();
@@ -78,7 +94,6 @@ public class PlayerMovement_Davi : MonoBehaviour
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
 
-        // ataque
         if (Input.GetButtonDown("Fire1"))
         {
             PlayerAttack();
@@ -108,7 +123,6 @@ public class PlayerMovement_Davi : MonoBehaviour
             dashDirection = transform.forward;
         }
 
-        // dash n muda altura do player
         dashDirection.y = 0f;
     }
 
@@ -126,13 +140,26 @@ public class PlayerMovement_Davi : MonoBehaviour
     private void PlayerAttack()
     {
         Debug.Log("ATACOU");
-        //animação
-        //detecção de hitbox
     }
 
     public void setPlayerSpeedMultiplier(float s)
     {
         player_speed_multiplier = s;
         player_speed = player_speed_multiplier * base_speed;
+    }
+
+    public void TogglePause()
+    {
+        Time.timeScale = pausado ? 0f : 1f;
+        if (menuPauseUI != null)
+        {
+            menuPauseUI.SetActive(pausado);
+        }
+        if (hud != null)
+        {
+            hud.SetActive(!pausado);
+        }
+        Cursor.lockState = pausado ? CursorLockMode.None : CursorLockMode.Locked;
+        Cursor.visible = pausado;
     }
 }

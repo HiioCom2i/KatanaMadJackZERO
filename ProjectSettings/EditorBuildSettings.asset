@@ -7,9 +7,9 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Project/Scenes/Menu.unity
-    guid: 8810fe7341e1ca54990249cc8dfe2cf4
+    guid: b68522cc25218184681e02634258f1b1
   - enabled: 1
     path: Assets/Project/Scenes/LevelZERO.unity
-    guid: b19262e93485f3742b7831bd76f43f54
+    guid: 5932cfbf5ad9dfa4e96b1816f0f351b7
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

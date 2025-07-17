@@ -9,7 +9,7 @@ public class MenuPause : MonoBehaviour
 {
 
 
-    public PlayerMovement player;
+    public PlayerPauseController player;
     public Slider volumeSFXSlider;
     public Slider volumeMusicaSlider;
     private string parametroVolumeSFX = "Volume SFX";
@@ -47,9 +47,9 @@ public class MenuPause : MonoBehaviour
     */
     public void VoltarAoJogo()
     {
-        player.pausado = !player.pausado;
-        player.TogglePause();
+    player.TogglePauseExternamente();
     }
+
 
     public void VoltarParaMenu()
     {

@@ -82,36 +82,36 @@ public class GameController : MonoBehaviour
         {
             case >= 560:  //RANK S
                 applyRankBonus('S');
-                player.setPlayerSpeedMultiplier(1.4f);
+                player.SetSpeedMultiplier(1.4f);
                 S.SetActive(true);
                 break;
             case >= 430:  //RANK A
                 applyRankBonus('A');
-                player.setPlayerSpeedMultiplier(1.2f);
+                player.SetSpeedMultiplier(1.2f);
                 A.SetActive(true);
                 A_claro.setFillAmount(560f, 430f, player_points);
                 break;
             case >= 310:  //RANK B
                 applyRankBonus('B');
-                player.setPlayerSpeedMultiplier(1f);
+                player.SetSpeedMultiplier(1f);
                 B.SetActive(true);
                 B_claro.setFillAmount(430f, 310f, player_points);
                 break;
             case >= 220:  //RANK C
                 applyRankBonus('C');
-                player.setPlayerSpeedMultiplier(1f);
+                player.SetSpeedMultiplier(1f);
                 C.SetActive(true);
                 C_claro.setFillAmount(310f, 220f, player_points);
                 break;
             case >= 90:   //RANK D
                 applyRankBonus('D');
-                player.setPlayerSpeedMultiplier(1f);
+                player.SetSpeedMultiplier(1f);
                 D.SetActive(true);
                 D_claro.setFillAmount(220f, 90f, player_points);
                 break;
             default:      //RANK E
                 applyRankBonus('E');
-                player.setPlayerSpeedMultiplier(1f);
+                player.SetSpeedMultiplier(1f);
                 E.SetActive(true);
                 E_claro.setFillAmount(90f, 0f, player_points);
                 break;

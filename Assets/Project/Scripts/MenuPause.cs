@@ -47,7 +47,7 @@ public class MenuPause : MonoBehaviour
     */
     public void VoltarAoJogo()
     {
-    player.TogglePauseExternamente();
+        player.TogglePauseExternamente();
     }
 
 

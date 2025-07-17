@@ -7,6 +7,8 @@ public class PlayerAttack : MonoBehaviour
     public int attackDamage = 1;
     public Transform attackPoint;
     public LayerMask enemyLayers;
+    public Animator katanaAnimator;
+
 
     [Header("Cooldown")]
     public float attackRate = 2f; // ataques por segundo
@@ -37,7 +39,7 @@ public class PlayerAttack : MonoBehaviour
 
         }
 
-        // Aqui você pode adicionar animação, som, efeitos visuais etc.
+        katanaAnimator.SetTrigger("Attack");
     }
 
     // Gizmo pra visualizar o alcance do ataque no editor

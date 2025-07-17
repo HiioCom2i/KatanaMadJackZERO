@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(CharacterController))]
@@ -53,6 +54,12 @@ public class PlayerMovement_Davi : MonoBehaviour
 
     void Update()
     {
+
+        if (health_points <= 0)
+        {
+            PlayerDies();
+        }
+
         // Gerencia o pause
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -161,5 +168,10 @@ public class PlayerMovement_Davi : MonoBehaviour
         }
         Cursor.lockState = pausado ? CursorLockMode.None : CursorLockMode.Locked;
         Cursor.visible = pausado;
+    }
+
+    public void PlayerDies()
+    {
+        SceneManager.LoadScene("GameOver");
     }
 }

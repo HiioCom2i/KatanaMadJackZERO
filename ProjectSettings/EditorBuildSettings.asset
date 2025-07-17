@@ -11,5 +11,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Project/Scenes/LevelZERO.unity
     guid: 5932cfbf5ad9dfa4e96b1816f0f351b7
+  - enabled: 1
+    path: Assets/Project/Scenes/GameOver.unity
+    guid: e33f0dd57f5a2204aa82dfe6e1362bef
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

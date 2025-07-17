@@ -3,8 +3,12 @@ using UnityEngine.SceneManagement;
 
 public class GameOverController : MonoBehaviour
 {
-   
-    void Start(){}
+
+    void Start()
+    {
+        Cursor.lockState = CursorLockMode.None; // Destrava o cursor
+        Cursor.visible = true;                  // Torna o cursor visível
+    }
     void Update(){}
 
     public void TentarNovamente()

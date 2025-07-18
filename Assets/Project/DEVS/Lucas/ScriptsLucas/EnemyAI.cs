@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections;
 
 public class EnemyAI : MonoBehaviour
 {
@@ -12,17 +13,26 @@ public class EnemyAI : MonoBehaviour
     public float fieldOfViewAngle = 60f;
     public LayerMask obstacleLayerMask = -1;
 
+    [Header("Attack Settings")]
+    public float attackRange = 2f;
+    public float attackCooldown = 1.5f;
+    public float attackDuration = 0.3f;
+
     [Header("Debug Visualization")]
     public bool showDebugRays = true;
     public bool showDetectionInfo = true;
 
     private NavMeshAgent agent;
     private Transform player;
+    private Renderer enemyRenderer;
+    private Color originalColor;
     private int currentPatrolIndex = 0;
     private float waitTimer = 0f;
     private bool isWaiting = false;
     private Vector3 lastKnownPlayerPosition;
     private bool playerDetected = false;
+    private float lastAttackTime = 0f;
+    private bool isAttacking = false;
 
     // Estados da FSM
     public enum EnemyState
@@ -39,6 +49,13 @@ public class EnemyAI : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        enemyRenderer = GetComponent<Renderer>();
+
+        // Guardar cor original
+        if (enemyRenderer != null)
+        {
+            originalColor = enemyRenderer.material.color;
+        }
 
         // Começar patrulhando
         if (patrolPoints.Length > 0)
@@ -49,30 +66,56 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
-        // Verificar detecção do player (exceto quando atacando)
-        if (currentState != EnemyState.ATTACK)
-        {
-            playerDetected = CanSeePlayer();
-            if (playerDetected)
-            {
-                lastKnownPlayerPosition = player.position;
-                ChangeState(EnemyState.CHASE);
-            }
-        }
+        // Verificar detecção do player
+        playerDetected = CanSeePlayer();
+        float distanceToPlayer = player != null ? Vector3.Distance(transform.position, player.position) : float.MaxValue;
 
-        // Executar comportamento do estado atual
+        // Lógica de transição de estados
         switch (currentState)
         {
             case EnemyState.PATROL:
-                PatrolBehavior();
+                if (playerDetected)
+                {
+                    lastKnownPlayerPosition = player.position;
+                    ChangeState(EnemyState.CHASE);
+                }
+                else
+                {
+                    PatrolBehavior();
+                }
                 break;
+
             case EnemyState.CHASE:
-                ChaseBehavior();
+                if (!playerDetected)
+                {
+                    ChangeState(EnemyState.PATROL);
+                }
+                else if (distanceToPlayer <= attackRange)
+                {
+                    ChangeState(EnemyState.ATTACK);
+                }
+                else
+                {
+                    ChaseBehavior();
+                }
                 break;
-            case EnemyState.SEARCH:
-                // Implementaremos depois
-                break;
+
             case EnemyState.ATTACK:
+                // SÓ sai do estado ATTACK se:
+                // 1. Não vê mais o player OU
+                // 2. Player está muito longe
+                if (!playerDetected || distanceToPlayer > attackRange * 1.5f)
+                {
+                    ChangeState(EnemyState.CHASE);
+                }
+                else
+                {
+                    // CONTINUA atacando enquanto player estiver no alcance
+                    AttackBehavior();
+                }
+                break;
+
+            case EnemyState.SEARCH:
                 // Implementaremos depois
                 break;
         }
@@ -83,7 +126,6 @@ public class EnemyAI : MonoBehaviour
             DrawDebugRays();
         }
     }
-
     void PatrolBehavior()
     {
         // Se chegou no destino
@@ -111,13 +153,70 @@ public class EnemyAI : MonoBehaviour
     void ChaseBehavior()
     {
         // Perseguir o player
+        agent.isStopped = false;
         agent.SetDestination(player.position);
+    }
 
-        // Se perdeu o player, voltar para patrulha
-        if (!CanSeePlayer())
+    void AttackBehavior()
+    {
+        // Parar movimento e olhar para o player
+        agent.isStopped = true;
+
+        // Rotacionar para o player
+        Vector3 directionToPlayer = (player.position - transform.position).normalized;
+        directionToPlayer.y = 0; // Manter rotação apenas no eixo Y
+        if (directionToPlayer != Vector3.zero)
         {
-            ChangeState(EnemyState.PATROL);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(directionToPlayer), Time.deltaTime * 5f);
         }
+
+        // Verificar se pode atacar (cooldown)
+        if (Time.time >= lastAttackTime + attackCooldown && !isAttacking)
+        {
+            StartCoroutine(PerformAttack());
+        }
+    }
+
+    IEnumerator PerformAttack()
+    {
+        isAttacking = true;
+        lastAttackTime = Time.time;
+
+        // PASSO 1.2: Feedback Visual (piscar amarelo)
+        StartCoroutine(AttackVisualFeedback());
+
+        // Debug do ataque
+        if (showDetectionInfo)
+        {
+            Debug.Log($"Enemy atacou o Player! Dano aplicado.");
+        }
+
+        // TODO: Aplicar dano no player aqui (Passo 1.3)
+
+        // Aguardar duração do ataque
+        yield return new WaitForSeconds(attackDuration);
+
+        isAttacking = false;
+    }
+
+    IEnumerator AttackVisualFeedback()
+    {
+        if (enemyRenderer == null) yield break;
+
+        // Piscar para amarelo
+        enemyRenderer.material.color = Color.yellow;
+        yield return new WaitForSeconds(attackDuration * 0.5f);
+
+        // Voltar para cor original
+        enemyRenderer.material.color = originalColor;
+        yield return new WaitForSeconds(attackDuration * 0.5f);
+
+        // Piscar novamente para dar ênfase
+        enemyRenderer.material.color = Color.yellow;
+        yield return new WaitForSeconds(attackDuration * 0.25f);
+
+        // Cor final
+        enemyRenderer.material.color = originalColor;
     }
 
     bool CanSeePlayer()
@@ -128,13 +227,30 @@ public class EnemyAI : MonoBehaviour
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
         if (distanceToPlayer > detectionRadius) return false;
 
-        // ETAPA 2: Verificar ângulo de visão (campo de visão)
+        // ETAPA 2: Campo de visão adaptativo baseado na distância
+        float adaptiveFieldOfView = fieldOfViewAngle;
+
+        // Quando mais próximo, campo de visão aumenta
+        if (distanceToPlayer <= attackRange * 2f) // Zona próxima
+        {
+            // Interpolar entre fieldOfViewAngle normal e 180°
+            float proximityFactor = 1f - (distanceToPlayer / (attackRange * 2f));
+            adaptiveFieldOfView = Mathf.Lerp(fieldOfViewAngle, 180f, proximityFactor);
+        }
+
+        // Durante ATTACK, campo de visão ainda mais amplo
+        if (currentState == EnemyState.ATTACK)
+        {
+            adaptiveFieldOfView = 180f; // Quase impossível "escapar" durante ataque
+        }
+
+        // Verificar ângulo de visão com campo adaptativo
         Vector3 directionToPlayer = (player.position - transform.position).normalized;
         float angle = Vector3.Angle(transform.forward, directionToPlayer);
-        if (angle > fieldOfViewAngle / 2) return false;
+        if (angle > adaptiveFieldOfView / 2) return false;
 
         // ETAPA 3: Verificar linha de visão (raycast para obstáculos)
-        Vector3 rayStart = transform.position + Vector3.up * 1.5f; // Altura dos "olhos"
+        Vector3 rayStart = transform.position + Vector3.up * 1.5f;
         Ray ray = new Ray(rayStart, directionToPlayer);
         RaycastHit hit;
 
@@ -142,13 +258,12 @@ public class EnemyAI : MonoBehaviour
         {
             if (hit.collider.CompareTag("Player"))
             {
-                return true; // Vê o player!
+                return true;
             }
         }
 
-        return false; // Algo está bloqueando a visão
+        return false;
     }
-
     void ChangeState(EnemyState newState)
     {
         if (showDetectionInfo)
@@ -161,6 +276,12 @@ public class EnemyAI : MonoBehaviour
         // Reset do waiting quando muda estado
         isWaiting = false;
         waitTimer = 0f;
+
+        // Reset do agent quando necessário
+        if (newState == EnemyState.CHASE || newState == EnemyState.PATROL)
+        {
+            agent.isStopped = false;
+        }
     }
 
     void DrawDebugRays()
@@ -172,6 +293,18 @@ public class EnemyAI : MonoBehaviour
         Debug.DrawLine(transform.position + Vector3.up * 1.5f, transform.position + leftBoundary + Vector3.up * 1.5f, Color.yellow);
         Debug.DrawLine(transform.position + Vector3.up * 1.5f, transform.position + rightBoundary + Vector3.up * 1.5f, Color.yellow);
         Debug.DrawLine(transform.position + leftBoundary + Vector3.up * 1.5f, transform.position + rightBoundary + Vector3.up * 1.5f, Color.yellow);
+
+        // CÍRCULO DE ATAQUE (vermelho)
+        for (int i = 0; i < 24; i++)
+        {
+            float angle1 = i * 15f * Mathf.Deg2Rad;
+            float angle2 = (i + 1) * 15f * Mathf.Deg2Rad;
+
+            Vector3 point1 = transform.position + new Vector3(Mathf.Sin(angle1), 0, Mathf.Cos(angle1)) * attackRange;
+            Vector3 point2 = transform.position + new Vector3(Mathf.Sin(angle2), 0, Mathf.Cos(angle2)) * attackRange;
+
+            Debug.DrawLine(point1, point2, Color.red, 0.1f);
+        }
 
         // RAYCAST PARA O PLAYER (se dentro do campo de visão)
         if (player != null)
@@ -204,8 +337,13 @@ public class EnemyAI : MonoBehaviour
     // Visualizar no Scene View (quando selecionar o objeto)
     void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.red;
+        // Raio de detecção
+        Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(transform.position, detectionRadius);
+
+        // Raio de ataque
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
 
         // Mostrar campo de visão
         Gizmos.color = Color.yellow;
@@ -221,18 +359,16 @@ public class EnemyAI : MonoBehaviour
     {
         if (showDetectionInfo && Application.isPlaying)
         {
-            GUI.Box(new Rect(10, 10, 200, 100), "");
+            GUI.Box(new Rect(10, 10, 200, 120), "");
             GUI.Label(new Rect(15, 15, 190, 20), $"Estado: {currentState}");
             GUI.Label(new Rect(15, 35, 190, 20), $"Player detectado: {playerDetected}");
+            GUI.Label(new Rect(15, 55, 190, 20), $"Atacando: {isAttacking}");
 
             if (player != null)
             {
                 float distance = Vector3.Distance(transform.position, player.position);
-                GUI.Label(new Rect(15, 55, 190, 20), $"Distância: {distance:F1}m");
-
-                Vector3 directionToPlayer = (player.position - transform.position).normalized;
-                float angle = Vector3.Angle(transform.forward, directionToPlayer);
-                GUI.Label(new Rect(15, 75, 190, 20), $"Ângulo: {angle:F1}°");
+                GUI.Label(new Rect(15, 75, 190, 20), $"Distância: {distance:F1}m");
+                GUI.Label(new Rect(15, 95, 190, 20), $"No alcance: {distance <= attackRange}");
             }
         }
     }

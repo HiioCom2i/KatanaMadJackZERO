@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{970703b7-16ad-48e6-a420-78482266c939}">
+		<property name="assetPath">
+			<value>Pulo/Pulo - 7.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.33414965986394557</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{fc034750-8676-4d0e-9b26-db1a8e7975dd}</destination>
+		</relationship>
+	</object>
+</objects>

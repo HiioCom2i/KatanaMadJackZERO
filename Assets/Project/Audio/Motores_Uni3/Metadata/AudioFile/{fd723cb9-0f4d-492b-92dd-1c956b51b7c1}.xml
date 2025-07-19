@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{fd723cb9-0f4d-492b-92dd-1c956b51b7c1}">
+		<property name="assetPath">
+			<value>Dash/Dash Swoosh - 3.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.36301587301587301</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{fc034750-8676-4d0e-9b26-db1a8e7975dd}</destination>
+		</relationship>
+	</object>
+</objects>

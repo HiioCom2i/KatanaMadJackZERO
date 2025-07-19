@@ -2513,7 +2513,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f22b0216e89a58643a83acf7ef1791fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  player: {fileID: 118712025}
   volumeSFXSlider: {fileID: 1809872775}
   volumeMusicaSlider: {fileID: 1050554824}
 --- !u!1 &963794038

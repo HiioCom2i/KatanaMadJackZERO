@@ -125,7 +125,7 @@
 	</object>
 	<object class="EventMixerGroup" id="{21e37b52-7377-4e08-9dd4-8ffbfb55bc93}">
 		<property name="volume">
-			<value>-7</value>
+			<value>1</value>
 		</property>
 		<property name="name">
 			<value>Passos</value>
@@ -145,7 +145,7 @@
 			<value>0</value>
 		</property>
 		<property name="length">
-			<value>0.234375</value>
+			<value>0.24596418308702792</value>
 		</property>
 		<relationship name="timeline">
 			<destination>{1d52b775-0a5f-4189-8458-b8a97012a974}</destination>
@@ -232,6 +232,9 @@
 		</property>
 		<property name="value">
 			<value>-80</value>
+		</property>
+		<property name="curveShape">
+			<value>-0.422117591</value>
 		</property>
 	</object>
 	<object class="AutomationPoint" id="{340347cf-36ec-4031-9314-7cfd3290be23}">

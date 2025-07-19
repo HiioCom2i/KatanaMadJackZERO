@@ -1,3 +1,5 @@
+using FMOD.Studio;
+using FMODUnity;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -19,6 +21,9 @@ public class PlayerMovement_Davi : MonoBehaviour
     private Vector3 move;
     public GameController_Davi gameController;
 
+    // VARIÁVEIS FMOD
+    private EventInstance passos;
+
 
     // VARIÁVEIS DASH 
     public float dashDistance = 6f;
@@ -37,6 +42,9 @@ public class PlayerMovement_Davi : MonoBehaviour
 
     void Start()
     {
+
+        passos = RuntimeManager.CreateInstance("event:/Player_Passos");
+
         player_speed = player_speed_multiplier * base_speed;
         controller = GetComponent<CharacterController>();
         InvokeRepeating("playerHPRegen", 5f, 5f);
@@ -85,6 +93,22 @@ public class PlayerMovement_Davi : MonoBehaviour
         float moveZ = Input.GetAxis("Vertical");
 
         move = transform.right * moveX + transform.forward * moveZ;
+
+        if (move.magnitude > 0.1f && controller.isGrounded)
+        {
+            // Enquanto o jogador está se movendo toca som de passos
+            FMOD.Studio.PLAYBACK_STATE playbackState;
+            passos.getPlaybackState(out playbackState);
+
+            if (playbackState != FMOD.Studio.PLAYBACK_STATE.PLAYING)
+            {
+                passos.start();
+            }
+        }
+        else
+        {
+            passos.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        }
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
         {
@@ -174,4 +198,11 @@ public class PlayerMovement_Davi : MonoBehaviour
     {
         SceneManager.LoadScene("GameOver");
     }
+
+    void OnDestroy()
+    {
+        passos.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        passos.release();
+    }
+
 }

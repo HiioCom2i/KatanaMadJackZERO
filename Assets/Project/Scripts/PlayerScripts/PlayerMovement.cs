@@ -1,3 +1,5 @@
+using FMOD.Studio;
+using FMODUnity;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
@@ -13,10 +15,15 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 velocity;
     private Vector3 move;
 
+    // VARIÁVEIS FMOD
+    private EventInstance passos;
+
     void Start()
     {
         speed = baseSpeed * speedMultiplier;
         controller = GetComponent<CharacterController>();
+
+        passos = RuntimeManager.CreateInstance("event:/Player_Passos");  // Inicia evento dos passos
     }
 
     void Update()
@@ -27,6 +34,22 @@ public class PlayerMovement : MonoBehaviour
         float moveX = Input.GetAxis("Horizontal");
         float moveZ = Input.GetAxis("Vertical");
         move = transform.right * moveX + transform.forward * moveZ;
+
+        if (move.magnitude > 0.1f && controller.isGrounded)
+        {
+            // Enquanto o jogador está se movendo toca som de passos
+            FMOD.Studio.PLAYBACK_STATE playbackState;
+            passos.getPlaybackState(out playbackState);
+
+            if (playbackState != FMOD.Studio.PLAYBACK_STATE.PLAYING)
+            {
+                passos.start();
+            }
+        }
+        else
+        {
+            passos.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        }
 
         if (Input.GetButtonDown("Jump") && controller.isGrounded)
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
@@ -45,5 +68,11 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 GetMoveDirection()
     {
         return move.normalized;
+    }
+
+    void OnDestroy()
+    {
+        passos.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        passos.release();
     }
 }

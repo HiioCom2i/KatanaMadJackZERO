@@ -1,5 +1,6 @@
 using FMOD.Studio;
 using FMODUnity;
+using FMODUnityResonance;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -23,6 +24,10 @@ public class PlayerMovement_Davi : MonoBehaviour
 
     // VARIÁVEIS FMOD
     private EventInstance passos;
+    private EventInstance pulo;
+    private EventInstance dash;
+
+
 
 
     // VARIÁVEIS DASH 
@@ -44,6 +49,9 @@ public class PlayerMovement_Davi : MonoBehaviour
     {
 
         passos = RuntimeManager.CreateInstance("event:/Player_Passos");
+        pulo = RuntimeManager.CreateInstance("event:/Player_Pulo");
+        dash = RuntimeManager.CreateInstance("event:/Player_Dash");
+
 
         player_speed = player_speed_multiplier * base_speed;
         controller = GetComponent<CharacterController>();
@@ -78,6 +86,7 @@ public class PlayerMovement_Davi : MonoBehaviour
 
         if (isDashing)
         {
+            
             controller.Move(dashDirection * (dashDistance / dashDuration) * Time.deltaTime);
             dashTimer += Time.deltaTime;
             if (dashTimer >= dashDuration)
@@ -122,6 +131,7 @@ public class PlayerMovement_Davi : MonoBehaviour
 
         if (Input.GetButtonDown("Jump") && controller.isGrounded)
         {
+            pulo.start(); // Toca som de pulo
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
 
@@ -141,6 +151,7 @@ public class PlayerMovement_Davi : MonoBehaviour
 
     private void StartDash()
     {
+        dash.start(); // Toca som de dash
         canDash = false;
         isDashing = true;
         velocity.y = 0f;
@@ -203,6 +214,13 @@ public class PlayerMovement_Davi : MonoBehaviour
     {
         passos.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         passos.release();
+
+        pulo.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        pulo.release();
+
+        dash.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        dash.release();
     }
+
 
 }

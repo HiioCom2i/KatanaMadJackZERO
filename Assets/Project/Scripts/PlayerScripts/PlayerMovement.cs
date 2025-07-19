@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
 
     // VARIÁVEIS FMOD
     private EventInstance passos;
+    private EventInstance pulo;
 
     void Start()
     {
@@ -24,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
         controller = GetComponent<CharacterController>();
 
         passos = RuntimeManager.CreateInstance("event:/Player_Passos");  // Inicia evento dos passos
+        pulo = RuntimeManager.CreateInstance("event:/Player_Pulo");
     }
 
     void Update()
@@ -52,7 +54,10 @@ public class PlayerMovement : MonoBehaviour
         }
 
         if (Input.GetButtonDown("Jump") && controller.isGrounded)
+        {
+            pulo.start(); // Toca som de pulo
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        }
 
         velocity.y += gravity * Time.deltaTime;
         Vector3 finalMove = move * speed + Vector3.up * velocity.y;
@@ -74,5 +79,8 @@ public class PlayerMovement : MonoBehaviour
     {
         passos.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         passos.release();
+
+        pulo.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        pulo.release();
     }
 }

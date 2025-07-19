@@ -1,3 +1,5 @@
+using FMOD.Studio;
+using FMODUnity;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController), typeof(PlayerMovement))]
@@ -15,10 +17,14 @@ public class PlayerDash : MonoBehaviour
     private CharacterController controller;
     private PlayerMovement playerMovement;
 
+    // VARIÁVEIS FMOD
+    private EventInstance dash;
+
     void Start()
     {
         controller = GetComponent<CharacterController>();
         playerMovement = GetComponent<PlayerMovement>();
+        dash = RuntimeManager.CreateInstance("event:/Player_Dash");
     }
 
     void Update()
@@ -45,6 +51,7 @@ public class PlayerDash : MonoBehaviour
 
     private void StartDash()
     {
+        dash.start(); // Toca som de dash
         canDash = false;
         isDashing = true;
 
@@ -56,5 +63,11 @@ public class PlayerDash : MonoBehaviour
     private void ResetDash()
     {
         canDash = true;
+    }
+
+    void OnDestroy()
+    {
+        dash.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        dash.release();
     }
 }

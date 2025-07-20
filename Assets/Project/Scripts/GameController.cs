@@ -31,6 +31,7 @@ public class GameController : MonoBehaviour
 
     // Música
     private EventInstance musicaFase0;
+    private string parametroEmCombate = "Em Combate";
 
     void Start()
     {
@@ -150,6 +151,21 @@ public class GameController : MonoBehaviour
     public int getPlayerPoints()
     {
         return player_points;
+    }
+
+    // Altera o parâmetro de combate do jogador
+    public void setParametroEmCombate(bool valor)
+    {
+        if (valor == true)
+        {
+            musicaFase0.setParameterByName(parametroEmCombate, 1f);
+
+        }
+        else
+        {
+            musicaFase0.setParameterByName(parametroEmCombate, 0f);
+
+        }
     }
 
     // Para a música 

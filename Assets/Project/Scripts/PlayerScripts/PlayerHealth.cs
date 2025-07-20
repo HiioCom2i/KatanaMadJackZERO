@@ -5,8 +5,11 @@ public class PlayerHealth : MonoBehaviour
 {
     public double maxHealth = 200;
     public double currentHealth;
-    public float regenInterval = 5f;
-    public double regenAmount = 5;
+    public float regenInterval = 2f;
+    public double regenAmount = 15;
+    private bool regenerating = false;
+
+    private bool inCombat = false;
 
     public GameController gameController;
     public PlayerUIController uiController;  // referência pra atualizar UI
@@ -14,7 +17,7 @@ public class PlayerHealth : MonoBehaviour
     void Start()
     {
         currentHealth = maxHealth;
-        InvokeRepeating(nameof(RegenerateHealth), regenInterval, regenInterval);
+        //InvokeRepeating(nameof(RegenerateHealth), regenInterval, regenInterval);
         UpdateUI();
     }
 
@@ -27,6 +30,21 @@ public class PlayerHealth : MonoBehaviour
                 currentHealth = maxHealth;
 
             UpdateUI();
+        }
+
+        if (currentHealth >= maxHealth)
+        {
+            CancelInvoke(nameof(RegenerateHealth));
+            regenerating = false;
+        }
+    }
+
+    public void StartRegeneration()
+    {
+        if (!regenerating && currentHealth < maxHealth)
+        {
+            regenerating = true;
+            InvokeRepeating(nameof(RegenerateHealth), regenInterval, regenInterval);
         }
     }
 
@@ -46,6 +64,18 @@ public class PlayerHealth : MonoBehaviour
     {
         if (uiController != null)
             uiController.UpdateHealth(currentHealth);
+    }
+
+    public void setInCombat(bool valor)
+    {
+        inCombat = valor;
+
+        if (valor) // Entrou em combate
+        {
+            CancelInvoke(nameof(RegenerateHealth));
+            regenerating = false;
+        }
+        // Fora de combate: regeneração começa externamente com StartRegeneration()
     }
 
     void Die()

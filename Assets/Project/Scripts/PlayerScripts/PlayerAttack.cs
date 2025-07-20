@@ -32,7 +32,6 @@ public class PlayerAttack : MonoBehaviour
 
         if (Time.unscaledTime >= nextAttackTime && Input.GetKeyDown(KeyCode.Mouse0))
         {
-            Debug.Log("Ataque com cooldown respeitado");
             Attack();
             nextAttackTime = Time.unscaledTime + 1f / attackRate;
         }

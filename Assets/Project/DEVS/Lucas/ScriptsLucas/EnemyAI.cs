@@ -5,7 +5,7 @@ using System.Collections;
 public class EnemyAI : MonoBehaviour
 {
     [Header("Patrol Settings")]
-    public Transform[] patrolPoints;
+    [SerializeField] private Transform[] patrolPoints = new Transform[0];
     public float waitTime = 2f;
 
     [Header("Detection Settings")]
@@ -57,10 +57,15 @@ public class EnemyAI : MonoBehaviour
             originalColor = enemyRenderer.material.color;
         }
 
-        // Começar patrulhando
-        if (patrolPoints.Length > 0)
+        // Começar patrulhando (se tem patrol points configurados)
+        if (patrolPoints != null && patrolPoints.Length > 0)
         {
             agent.SetDestination(patrolPoints[0].position);
+            Debug.Log($"{gameObject.name} iniciando patrulha com {patrolPoints.Length} pontos");
+        }
+        else
+        {
+            Debug.Log($"{gameObject.name} aguardando configuração de patrol points...");
         }
     }
 

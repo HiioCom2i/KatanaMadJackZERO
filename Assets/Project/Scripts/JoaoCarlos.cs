@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class JoaoCarlos : MonoBehaviour
 {
-    public int health = 100;
+    public double health = 100;
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(double damage)
     {
         health -= damage;
         Debug.Log($"{gameObject.name} tomou {damage} de dano. Vida restante: {health}");

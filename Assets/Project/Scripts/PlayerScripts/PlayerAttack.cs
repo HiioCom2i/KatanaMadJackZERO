@@ -5,8 +5,9 @@ using UnityEngine;
 public class PlayerAttack : MonoBehaviour
 {
     [Header("Attack Settings")]
-    public float attackRange = 1.5f;
-    public int attackDamage = 1;
+    public GameController gameController;
+    public float katanaAttackRange = 1.5f;
+    private double katanaAttackDamage;
     public Transform attackPoint;
     public LayerMask enemyLayers;
     //public Animator katanaAnimator;  COOLDOWN N FUNCIONA SEM A ANIMAÇÃO
@@ -22,8 +23,10 @@ public class PlayerAttack : MonoBehaviour
 
     void Start()
     {
+        //FMOD
         ataque = RuntimeManager.CreateInstance("event:/Player_Ataca_Espada");
         ataque_no_inimigo = RuntimeManager.CreateInstance("event:/Player_AtacaAtinge_Espada");
+
     }
 
     void Update()
@@ -40,17 +43,19 @@ public class PlayerAttack : MonoBehaviour
     void Attack()
     {
         Debug.Log("ATACOU!");
+        katanaAttackDamage = gameController.getKatanaDamage();
 
         // Detectar inimigos no alcance
-        Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayers);
+        Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, katanaAttackRange, enemyLayers);
 
         bool atingiuAlvo = false;
 
         foreach (Collider enemy in hitEnemies)
         {
-            Debug.Log("Acertou " + enemy.name);
-            enemy.GetComponentInParent<JoaoCarlos>()?.TakeDamage(attackDamage);
+            Debug.Log("Acertou " + enemy.name + " e deu " + katanaAttackDamage + " de dano");
+            enemy.GetComponentInParent<JoaoCarlos>()?.TakeDamage(katanaAttackDamage);
             atingiuAlvo = true;
+            gameController.addPlayerPoints(10);
         }
 
 
@@ -75,7 +80,7 @@ public class PlayerAttack : MonoBehaviour
             return;
 
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+        Gizmos.DrawWireSphere(attackPoint.position, katanaAttackRange);
     }
     
     void OnDestroy()

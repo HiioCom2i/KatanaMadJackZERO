@@ -153,6 +153,16 @@ public class GameController : MonoBehaviour
         return player_points;
     }
 
+    public double getKatanaDamage()
+    {
+        return player_katana_dmg;
+    }
+
+    public double getPistolDamage()
+    {
+        return player_pistol_dmg;
+    }
+
     // Altera o parâmetro de combate do jogador
     public void setParametroEmCombate(bool valor)
     {
@@ -167,6 +177,7 @@ public class GameController : MonoBehaviour
 
         }
     }
+
 
     // Para a música 
     void OnDestroy()

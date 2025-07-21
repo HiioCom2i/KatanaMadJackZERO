@@ -12,39 +12,42 @@ public class EnemyProximity : MonoBehaviour
     private HashSet<GameObject> enemiesInRange = new HashSet<GameObject>();
     private bool isInCombat = false;
 
-    private void OnTriggerEnter(Collider other)
+    private void Update()
     {
+        // Remove inimigos destruídos
+        enemiesInRange.RemoveWhere(enemy => enemy == null);
 
-        if (IsInEnemyLayer(other.gameObject))
+        // Verifica se deve sair ou entrar em combate
+        if (enemiesInRange.Count > 0 && !isInCombat)
         {
-            enemiesInRange.Add(other.gameObject);
-
-            if (!isInCombat)
-            {
-                isInCombat = true;
-                game_controller.setParametroEmCombate(true);
-                player_health.setInCombat(true);
-            }
+            isInCombat = true;
+            game_controller.setParametroEmCombate(true);
+            player_health.setInCombat(true);
+        }
+        else if (enemiesInRange.Count == 0 && isInCombat)
+        {
+            isInCombat = false;
+            game_controller.setParametroEmCombate(false);
+            player_health.setInCombat(false);
+            player_health.StartRegeneration();
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (IsInEnemyLayer(other.gameObject))
+        {
+            enemiesInRange.Add(other.gameObject);
+        }
+    }
 
     private void OnTriggerExit(Collider other)
     {
         if (IsInEnemyLayer(other.gameObject))
         {
             enemiesInRange.Remove(other.gameObject);
-
-            if (enemiesInRange.Count == 0 && isInCombat)
-            {
-                isInCombat = false;
-                game_controller.setParametroEmCombate(false);
-                player_health.setInCombat(false);
-                player_health.StartRegeneration();
-            }
         }
     }
-
 
     private bool IsInEnemyLayer(GameObject obj)
     {

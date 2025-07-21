@@ -53,7 +53,7 @@ public class PlayerAttack : MonoBehaviour
         foreach (Collider enemy in hitEnemies)
         {
             Debug.Log("Acertou " + enemy.name + " e deu " + katanaAttackDamage + " de dano");
-            enemy.GetComponentInParent<JoaoCarlos>()?.TakeDamage(katanaAttackDamage);
+            enemy.GetComponentInParent<EnemyAI>()?.enemyTakeDamage(katanaAttackDamage);
             atingiuAlvo = true;
             gameController.addPlayerPoints(10);
         }

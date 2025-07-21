@@ -8111,7 +8111,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: b786cf5ac2734f44c97d59264a755703,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.435
+      value: 0.4350013
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b786cf5ac2734f44c97d59264a755703,
         type: 3}
@@ -8121,7 +8121,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: b786cf5ac2734f44c97d59264a755703,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.804
+      value: 0.80400103
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b786cf5ac2734f44c97d59264a755703,
         type: 3}
@@ -8136,27 +8136,27 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: b786cf5ac2734f44c97d59264a755703,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.0010390602
+      value: -0.0010390616
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b786cf5ac2734f44c97d59264a755703,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.08049123
+      value: 0.08049118
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b786cf5ac2734f44c97d59264a755703,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -27.453
+      value: -46.795
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b786cf5ac2734f44c97d59264a755703,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -193.465
+      value: -172.37
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b786cf5ac2734f44c97d59264a755703,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 174.166
+      value: 163.079
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b786cf5ac2734f44c97d59264a755703,
         type: 3}
@@ -10196,6 +10196,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RevolverZERO
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ff7fde2f774994042b489de92f369c76,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

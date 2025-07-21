@@ -427,6 +427,7 @@ MonoBehaviour:
   enemyLayers:
     serializedVersion: 2
     m_Bits: 64
+  katanaAnimator: {fileID: 0}
   attackRate: 2
 --- !u!114 &118712024
 MonoBehaviour:
@@ -4146,6 +4147,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7953580800393923495, guid: 9e43a6fd4d69e4de1aecdb5782eaf90a,
         type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7953580800393923495, guid: 9e43a6fd4d69e4de1aecdb5782eaf90a,
+        type: 3}
       propertyPath: m_TagString
       value: Enemy
       objectReference: {fileID: 0}
@@ -4330,6 +4336,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7953580800393923495, guid: 9e43a6fd4d69e4de1aecdb5782eaf90a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7953580800393923495, guid: 9e43a6fd4d69e4de1aecdb5782eaf90a,
         type: 3}
@@ -5442,6 +5453,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7953580800393923495, guid: 9e43a6fd4d69e4de1aecdb5782eaf90a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7953580800393923495, guid: 9e43a6fd4d69e4de1aecdb5782eaf90a,
         type: 3}

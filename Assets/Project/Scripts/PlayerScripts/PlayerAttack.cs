@@ -10,7 +10,7 @@ public class PlayerAttack : MonoBehaviour
     private double katanaAttackDamage;
     public Transform attackPoint;
     public LayerMask enemyLayers;
-    //public Animator katanaAnimator;  COOLDOWN N FUNCIONA SEM A ANIMAÇÃO
+    public Animator katanaAnimator; 
 
 
     [Header("Cooldown")]
@@ -69,7 +69,7 @@ public class PlayerAttack : MonoBehaviour
         }
 
         // Animação
-        //katanaAnimator.SetTrigger("Attack");
+        katanaAnimator.SetTrigger("Attack");
     }
 
 

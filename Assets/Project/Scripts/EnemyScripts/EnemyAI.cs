@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
+using FMOD.Studio;
+using FMODUnity;
 
 public class EnemyAI : MonoBehaviour
 {
@@ -50,6 +52,10 @@ public class EnemyAI : MonoBehaviour
 
     public EnemyState currentState = EnemyState.PATROL;
 
+    // FMOD variables
+    private EventInstance ataque;
+    private EventInstance passos;
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -72,6 +78,11 @@ public class EnemyAI : MonoBehaviour
         {
             Debug.Log($"{gameObject.name} aguardando configuração de patrol points...");
         }
+
+        // FMOD
+        ataque = RuntimeManager.CreateInstance("event:/Inimigo_Ataca_Espada");
+        passos = RuntimeManager.CreateInstance("event:/Inimigo_Passos");  // Inicia evento dos passos
+
     }
 
     void Update()
@@ -129,6 +140,10 @@ public class EnemyAI : MonoBehaviour
                 // Implementaremos depois
                 break;
         }
+
+        // Passos do inimigo
+        handleFootsteps();
+
 
         // Debug visual em tempo real
         if (showDebugRays)
@@ -203,6 +218,8 @@ public class EnemyAI : MonoBehaviour
 
         // TODO: Aplicar dano no player aqui (Passo 1.3)
         playerHealth.TakeDamage(110);
+
+        ataque.start();
 
         // Aguardar duração do ataque
         yield return new WaitForSeconds(attackDuration);
@@ -384,6 +401,25 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+    void handleFootsteps()
+{
+    // Considera o inimigo andando se o agente está ativo e com velocidade perceptível
+    if (agent.enabled && agent.velocity.magnitude > 0.1f && agent.remainingDistance > agent.stoppingDistance)
+    {
+        passos.getPlaybackState(out PLAYBACK_STATE playbackState);
+
+        if (playbackState != PLAYBACK_STATE.PLAYING)
+        {
+            passos.start();
+        }
+    }
+    else
+    {
+        passos.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+    }
+}
+
+
     public void enemyTakeDamage(double damage)
     {
         enemyHealth -= damage;
@@ -398,5 +434,14 @@ public class EnemyAI : MonoBehaviour
     {
         Destroy(gameObject);
         gameController.addPlayerPoints(60);
+    }
+
+    void OnDestroy()
+    {
+        ataque.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        ataque.release();
+        
+        passos.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        passos.release();
     }
 }

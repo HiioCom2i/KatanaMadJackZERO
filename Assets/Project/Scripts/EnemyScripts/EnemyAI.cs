@@ -230,7 +230,7 @@ public class EnemyAI : MonoBehaviour
         }
 
         // TODO: Aplicar dano no player aqui (Passo 1.3)
-        playerHealth.TakeDamage(110);
+        playerHealth.TakeDamage(60);
 
         ataque.start();
 

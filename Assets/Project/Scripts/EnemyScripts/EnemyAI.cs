@@ -41,6 +41,8 @@ public class EnemyAI : MonoBehaviour
 
     private double enemyHealth = 140;
 
+    private EnemySpriteShake spriteShake;
+
     // Estados da FSM
     public enum EnemyState
     {
@@ -78,6 +80,8 @@ public class EnemyAI : MonoBehaviour
         {
             Debug.Log($"{gameObject.name} aguardando configuração de patrol points...");
         }
+        
+        spriteShake = GetComponentInChildren<EnemySpriteShake>();
 
         // FMOD
         ataque = RuntimeManager.CreateInstance("event:/Inimigo_Ataca_Espada");
@@ -143,6 +147,15 @@ public class EnemyAI : MonoBehaviour
 
         // Passos do inimigo
         handleFootsteps();
+        // SHAKING DO SPRITE
+        if (spriteShake != null)
+{
+            bool isWalking = agent.enabled && agent.velocity.magnitude > 0.1f && agent.remainingDistance > agent.stoppingDistance;
+            bool isChasing = currentState == EnemyState.CHASE;
+
+            spriteShake.SetShaking(isWalking && currentState != EnemyState.ATTACK);
+            spriteShake.SetShakeSpeed(isChasing);
+}
 
 
         // Debug visual em tempo real

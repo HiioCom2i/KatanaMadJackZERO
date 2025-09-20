@@ -10,8 +10,8 @@ Protótipo de Jogo feito na Unity, no estilo BoomerSlasher, com estética retrô
 
 
 <p align="center">
-  <img src="./Assets/Readme%20Assets/Captura%20de%20tela%202025-09-19%20154050.png" width="400"/>
-  <img src="./Assets/Readme%20Assets/Captura%20de%20tela%202025-09-19%20154036.png" width="400"/>
+  <img src="Assets/ReadmeAssets/KatanPrint.jpeg" width="450"/>
+  <img src="Assets/ReadmeAssets/katanaaaa.gif" width="400"/>
 </p>
 
 
@@ -22,7 +22,6 @@ Protótipo de Jogo feito na Unity, no estilo BoomerSlasher, com estética retrô
 
 - [Unity](https://unity.com/) (versão 6000.0.49f1)
 - Linguagem: **C#**
-- SDK VR: **Meta XR All-in-One SDK**
 
 
 ---
@@ -32,5 +31,5 @@ Protótipo de Jogo feito na Unity, no estilo BoomerSlasher, com estética retrô
 Clone este repositório e abra o projeto no Unity:
 
 ```bash
-git clone https://github.com/HiioCom2i/BateriaVR.git
-cd BateriaVR
+git clone https://github.com/HiioCom2i/KatanaMadJackZERO.git
+cd KatanaMadJackZERO

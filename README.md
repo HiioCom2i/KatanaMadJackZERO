@@ -10,7 +10,7 @@ Protótipo de Jogo feito na Unity, no estilo BoomerSlasher, com estética retrô
 
 
 <p align="center">
-  <img src="Assets/ReadmeAssets/KatanPrint.jpeg" width="450"/>
+  <img src="Assets/ReadmeAssets/KatanPrint.jpeg" width="425"/>
   <img src="Assets/ReadmeAssets/katanaaaa.gif" width="400"/>
 </p>
 

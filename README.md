@@ -1,4 +1,3 @@
-# Bateria em Realidade Aumentada
 # ⚔️ KatanaMadJackZERO
 
 Protótipo de Jogo feito na Unity, no estilo BoomerSlasher, com estética retrô e gameplay inspirada em Katana Zero, Mullet Madjack e DOOM 64. Sinópse: Um cara com Mullet maneiro, luta contra Fãs raivosos do Lex Luthor, é mais um dia normal, eu acho...
